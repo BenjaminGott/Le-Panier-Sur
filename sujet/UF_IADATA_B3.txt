@@ -1,0 +1,188 @@
+Application data sous forme de data storytelling
+=================================================
+Type :         PROJET
+Formations :   Ynov Informatique
+Promotions :   Bachelor 3
+UF :           SPE Data & IA
+
+
+CADRE DU PROJET
+---------------
+Ce projet permet d'évaluer les compétences acquises dans le cadre de l'UF
+« Spécialité IA & Data ». Le projet consiste à réaliser une application data
+exploitant des analyses de données synthétisées sous forme de visualisations
+au travers d'une histoire.
+
+Effectifs par groupe : 2
+
+Pour valider ce projet, vous pourrez opter pour un projet personnel ou un
+projet au choix parmi une liste de sujets proposés dans la partie
+« Projets au choix ».
+
+Il vous appartient d'effectuer les recherches par vous-même pour trouver les
+ressources à la réalisation du projet.
+
+Date de début : ................................
+Date de rendu : ................................
+
+
+OBJECTIFS DE FORMATION VISÉS
+-----------------------------
+
+Analyse et exploration de données et Analyse de données avancée
+- Savoir acquérir et structurer des données pertinentes en utilisant des
+  données ouvertes (open data) et/ou des méthodes de web scraping
+- Réaliser une préparation des données (formatage des différents types de
+  données, gestion des valeurs manquantes, des doublons, des valeurs
+  aberrantes) afin de les rendre exploitables par des méthodes d'analyses
+- Réaliser une analyse exploratoire de données afin de mettre en évidence
+  les informations contenues dans les données, savoir les synthétiser sous
+  forme de graphiques et identifier les variables pertinentes à utiliser
+  dans un modèle
+- Savoir appliquer au moins un modèle de machine learning dans vos analyses
+  en fonction de la catégorie de problème à résoudre (classification,
+  régression, clustering)
+- Savoir évaluer les performances d'un modèle en utilisant des métriques
+  adaptées, interpréter ces résultats et si nécessaire, ajuster les
+  paramètres pour comparer plusieurs modèles
+- Savoir interpréter vos résultats et les synthétiser en utilisant des
+  graphiques appropriés et des méthodes de data storytelling pour présenter
+  de manière synthétique vos conclusions
+
+Maths pour la DataScience
+- Utiliser des métriques pour quantifier la quantité et la qualité de
+  données présente dans les échantillons que vous aurez sélectionnés
+  (indicateurs statistiques descriptifs, statistique inférentielle)
+- Utiliser vos connaissances en statistiques et probabilités afin d'établir
+  des indicateurs univariés et multivariés, pour la préparation et les
+  analyses de données à réaliser
+- Utiliser des méthodes d'analyses de données vues en cours et savoir
+  rechercher de nouvelles méthodes qui pourraient être appropriées à votre
+  sujet (modèles statistiques, modèles de machine learning)
+
+Python avancé
+- Savoir implémenter, structurer et documenter du code pour les différentes
+  étapes du projet
+- Savoir utiliser des librairies appropriées de l'écosystème python pour la
+  data science (pandas, scikit-learn, seaborn...)
+
+
+LIBRARIES ET OUTILS
+-------------------
+- Utilisation obligatoire de Python, complété par SQL, R, Javascript, etc.
+- Notebooks interactifs : Jupyter Notebook
+- Datasets : Hugging Face, Kaggle
+- Acquisition, structuration et analyse exploratoire de données : pandas, numpy
+- Modélisation statistiques et machine learning : scikit-learn, statsmodels
+- Exploration et visualisation de données : matplotlib et/ou seaborn
+- Outils orientés visualisation de données : Dash (de la suite logicielle
+  Plotly), Panel (de la suite logicielle Holoviz), Bokeh
+- Outils orientés "interface application data" : Streamlit, Anvil
+- Versionning et collaboration : Git, GitHub, GitLab
+- IDE ou éditeur de code
+
+
+LIVRABLES
+---------
+Pour chaque groupe, vous devrez livrer les éléments suivants :
+- Dépôt Git avec tout le code et la documentation
+- Jupyter Notebook retraçant la démarche et les analyses
+- Application de data storytelling déployée localement
+- Documentation technique du projet et manuel d'installation et utilisation
+  de l'application
+
+
+MODALITÉS D'ÉVALUATION DU PROJET
+---------------------------------
+Vous serez évalué sur l'ensemble des productions. L'évaluation prendra la
+forme d'une présentation orale de synthèse accompagnée d'un support de
+présentation ainsi que d'une démonstration du travail réalisé et la démarche
+pour y parvenir.
+
+Le jury sera composé d'une partie des intervenants des cours de l'UF
+« SPÉ Data ».
+
+- Une note compétences transverses (coef. 1) : évaluée pendant l'oral
+  intermédiaire
+- Une note technique (coef. 3) : évaluée pendant l'oral final
+
+Chaque critère sera évalué selon 5 niveaux :
+
+Non acquis : L'étudiant ne démontre pas la compétence attendue ou produit un
+livrable absent, hors sujet ou inexploitable
+
+En cours d'acquisition : L'étudiant amorce la compétence mais de façon
+incomplète, imprécise ou avec des erreurs majeures
+
+Partiellement acquis : L'étudiant maîtrise partiellement la compétence, avec
+un résultat globalement cohérent mais comportant des manques ou imprécisions
+
+Acquis : L'étudiant démontre la compétence de manière satisfaisante, avec une
+mise en œuvre correcte et fonctionnelle, malgré quelques points perfectibles
+
+Maîtrisé : L'étudiant dépasse les attentes, en mobilisant la compétence de
+façon approfondie.
+
+Niveaux / Notes sur 20 :
+  Non acquis        : 0
+  En cours          : 8
+  Partiellement     : 12
+  Acquis            : 15
+  Maîtrisé          : 20
+
+Pour finir il faudra multiplier la compétence par la pondération pour avoir
+la note finale.
+
+
+ORAL INTERMÉDIAIRE
+------------------
+Date : ...
+Durée : 5 à 10 minutes + 5 minutes de questions
+
+Grille d'évaluation de l'oral intermédiaire — Compétences transverses (100%)
+
+Critère                                  | Pondération
+-----------------------------------------|------------
+Utiliser Git et GitHub                   | 3
+Gérer un projet avec des outils adaptés  | 4
+Justifier sa démarche et ses choix       | 5
+Présenter un projet à l'oral             | 5
+Adopter une posture professionnelle      | 3
+
+
+ORAL FINAL
+----------
+Date : ...
+Durée : 15 minutes + 5 minutes de questions
+
+Grille d'évaluation de l'oral final — GRILLE UF B3 IA & DATA (100%)
+
+Critère                                        | Pondération
+-----------------------------------------------|------------
+Acquérir des données                           | 4
+Préparer et nettoyer des données               | 3
+Explorer et analyser des données               | 3
+Visualiser des données                         | 3
+Appliquer un modèle de machine learning        | 4
+Prédire et donner des recommandations          | 4
+Concevoir et déployer une interface interactive| 2
+Documenter son projet                          | 2
+
+
+DESCRIPTIF DU PROJET
+--------------------
+Vous avez la possibilité de choisir entre un projet personnel ou un projet
+proposé.
+
+PROJET PERSONNEL :
+Vous avez la possibilité de choisir un sujet libre dans la mesure où il vous
+permette de valider les compétences présentes dans la grille d'évaluation.
+Travail minimum attendu :
+- Acquisition des données (API, Base de données, CSV...) et préparation (pandas)
+- Analyse exploratoire des données (Analyse + visualisation)
+- Utilisation d'un modèle de machine learning (prédiction, recommandations, etc.)
+- Concevoir et déployer une application interactive permettant aux utilisateurs
+  de visualiser les données, prédictions etc.
+- Documenter le projet
+
+
