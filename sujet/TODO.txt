@@ -1,0 +1,81 @@
+TODO - Le Panier Sur (Projet SPE Data & IA - B3)
+=================================================
+
+[ ] = à faire
+[x] = terminé
+[~] = en cours
+
+─────────────────────────────────────────────
+1. ACQUISITION DES DONNÉES
+─────────────────────────────────────────────
+[x] Scraper la liste des champignons (nom + URL) sur guidedeschampignons.com
+[x] Scraper les fiches détail de chaque champignon (nom, nom scientifique,
+    statut, chapeau, pores, lamelles, pied, chair, odeur, saveur, habitat,
+    saison, confusion, catégories, image base64)
+[x] Exporter les données en CSV (champignons.csv)
+[ ] Vérifier / corriger les valeurs nulles (ex: nom_scientifique = NaN)
+
+─────────────────────────────────────────────
+2. PRÉPARATION ET NETTOYAGE DES DONNÉES
+─────────────────────────────────────────────
+[ ] Gérer les valeurs manquantes (NaN) dans le DataFrame
+[ ] Standardiser les formats (statut, saison, habitat...)
+[ ] Supprimer les doublons éventuels
+[ ] Normaliser les colonnes texte (majuscules/minuscules, accents)
+[ ] Séparer la colonne "saison" en mois_debut / mois_fin
+
+─────────────────────────────────────────────
+3. ANALYSE EXPLORATOIRE DES DONNÉES (EDA)
+─────────────────────────────────────────────
+[ ] Distribution des statuts (comestible / toxique / à rejeter)
+[ ] Répartition par habitat (feuillus, conifères, prairies...)
+[ ] Répartition par saison de pousse
+[ ] Analyse des catégories les plus fréquentes
+[ ] Nuage de mots sur les descriptions (chapeau, chair, odeur...)
+[ ] Matrice de confusion champignons / champignons confondus
+
+─────────────────────────────────────────────
+4. VISUALISATIONS
+─────────────────────────────────────────────
+[ ] Graphique camembert : répartition des statuts
+[ ] Graphique barres : champignons par mois / saison
+[ ] Graphique barres : champignons par habitat
+[ ] Heatmap : co-occurrences de confusion entre espèces
+[ ] Affichage image dans l'interface (base64)
+
+─────────────────────────────────────────────
+5. MODÈLE DE MACHINE LEARNING
+─────────────────────────────────────────────
+[ ] Définir le problème : classification (comestible / toxique / à rejeter)
+[ ] Préparer les features (encodage des colonnes texte)
+[ ] Entraîner au moins un modèle (ex: Random Forest, SVM, KNN)
+[ ] Évaluer les performances (accuracy, precision, recall, matrice de confusion)
+[ ] Comparer plusieurs modèles si possible
+[ ] Interpréter les résultats (features importantes)
+
+─────────────────────────────────────────────
+6. APPLICATION INTERACTIVE (Streamlit ou Dash)
+─────────────────────────────────────────────
+[ ] Page d'accueil avec présentation du projet
+[ ] Page exploration : filtres par statut / habitat / saison
+[ ] Fiche détail par champignon (image + caractéristiques)
+[ ] Page visualisations / graphiques interactifs
+[ ] Page prédiction : entrer des caractéristiques → obtenir un statut prédit
+[ ] Déploiement local fonctionnel
+
+─────────────────────────────────────────────
+7. DOCUMENTATION
+─────────────────────────────────────────────
+[ ] README avec description du projet et contexte
+[ ] Manuel d'installation (requirements.txt ou environment.yml)
+[ ] Manuel d'utilisation de l'application
+[ ] Jupyter Notebook propre retraçant toute la démarche
+
+─────────────────────────────────────────────
+8. GIT / GESTION DE PROJET
+─────────────────────────────────────────────
+[x] Dépôt Git initialisé
+[ ] Branches organisées (main / develop / features)
+[ ] Commits réguliers et bien documentés
+[ ] Tableau de suivi à jour (Trello)
+[ ] README à jour sur GitHub
