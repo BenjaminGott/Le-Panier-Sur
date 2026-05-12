@@ -77,14 +77,6 @@
 		<div
 			class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-forest-600 sm:flex-row sm:px-6"
 		>
-			<p>
-				Données : <a
-					class="underline decoration-forest-300 underline-offset-2 hover:text-forest-900"
-					href="https://www.guidedeschampignons.com"
-					target="_blank"
-					rel="noreferrer">guidedeschampignons.com</a
-				>
-			</p>
 			<p>Projet pédagogique — Ynov B3 SPE Data &amp; IA</p>
 		</div>
 	</footer>

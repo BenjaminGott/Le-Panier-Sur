@@ -2,12 +2,7 @@
 
 > Application de galerie et d'identification de champignons — web & desktop
 
----
-
-## Aperçu
-
-<!-- CAPTURE : page d'accueil de l'application -->
-> _Capture d'écran à ajouter — page d'accueil (galerie des champignons)_
+![Page d'accueil](./docs/assets/home_page.png)
 
 Le Panier-Sûr est une application complète permettant de **consulter des fiches détaillées de champignons**, de **filtrer par habitat, saison et statut de comestibilité**, et d'**identifier un champignon** à partir de ses caractéristiques via un modèle XGBoost embarqué.
 
@@ -20,24 +15,38 @@ Le projet regroupe :
 
 ## Fonctionnalités
 
-- **Galerie** — parcourir ~200 espèces avec recherche, filtres par habitat / saison / statut
+- **Galerie** — parcourir 217 espèces avec recherche, filtres par statut / habitat / saison / couleur du chapeau
 - **Fiche champignon** — informations détaillées (comestibilité, habitats, saisons, morphologie)
-- **Prédiction** — identifier un champignon en entrant ses caractéristiques
-- **Statistiques** — visualisations (répartition par habitats, saisons, taux de dangerosité)
-- **Astuces** — guide de cueillette avec quiz interactif
-- **Application desktop** — version `.exe` Windows (et macOS/Linux) via Tauri
+- **Identification** — identifier un champignon en entrant ses caractéristiques (modèle XGBoost / ONNX)
+- **Statistiques** — visualisations (répartition par statut, espèces actives par mois, top habitats)
+- **Guide du cueilleur** — 7 étapes basées sur les statistiques du dataset, avec graphiques interactifs
+- **Application desktop** — version `.exe` Windows via Tauri
 
 ---
 
 ## Captures d'écran
 
-| Galerie | Fiche espèce |
-|---------|-------------|
-| <!-- CAPTURE : galerie --> _à ajouter_ | <!-- CAPTURE : fiche champignon --> _à ajouter_ |
+### Galerie & filtres
 
-| Prédiction | Statistiques |
-|-----------|-------------|
-| <!-- CAPTURE : page predict --> _à ajouter_ | <!-- CAPTURE : page stats --> _à ajouter_ |
+![Galerie](./docs/assets/home_page.png)
+
+### Fiche espèce
+
+![Fiche champignon](./docs/assets/details_1.png)
+
+![Fiche champignon — suite](./docs/assets/details_2.png)
+
+### Identification par le modèle
+
+![Page Identifier](./docs/assets/model.png)
+
+### Statistiques
+
+![Statistiques](./docs/assets/stats.png)
+
+### Guide du cueilleur
+
+![Guide](./docs/assets/guide.png)
 
 ---
 
@@ -46,13 +55,13 @@ Le projet regroupe :
 ```
 Le-Panier-Sur/
 ├── etl/                      # Pipeline de données (notebooks Jupyter)
-│   ├── scraping/             # Scraping des données champignons
+│   ├── scraping/             # Scraping des données
 │   ├── transform/            # Nettoyage & feature engineering
 │   ├── add_data/             # Augmentation des données
 │   └── data_visualisation/   # EDA & visualisations
 │
 ├── data/                     # Données brutes et transformées
-│   ├── raw/                  # Données scrappées originales
+│   ├── raw/                  # Données originales scrappées
 │   ├── transform/            # Données texte intermédiaires
 │   ├── clean_train_data/     # Données nettoyées pour l'entraînement
 │   ├── clean_web/            # Données pour l'application web
@@ -64,6 +73,7 @@ Le-Panier-Sur/
 │   ├── xgb_champignons.json  # Modèle entraîné (7.9 Mo)
 │   └── predict.py            # Script d'inférence CLI
 │
+├── docs/assets/              # Captures d'écran & visuels
 └── web/frontend/             # Application SvelteKit + Tauri
 ```
 
@@ -74,7 +84,7 @@ Le-Panier-Sur/
 ```
 Scraping (scrap.ipynb)
         ↓
-  ~219 espèces · 17 colonnes
+  ~217 espèces · 17 colonnes
         ↓
 Transformation (transform.ipynb)
         ↓
@@ -82,7 +92,7 @@ Transformation (transform.ipynb)
         ↓
 Augmentation (augment.ipynb)
         ↓
-  Dataset enrichi (~92 Mo) pour l'entraînement du modèle
+  Dataset enrichi (~92 Mo) pour l'entraînement
 ```
 
 ### Lancer le pipeline
@@ -106,14 +116,14 @@ Deux modèles entraînés :
 - **Arbre de décision** — sur les données réelles nettoyées
 - **XGBoost** (`xgb_champignons.json`) — sur les données augmentées, utilisé dans l'app
 
+Le modèle est exporté en **ONNX** et embarqué dans l'application pour une inférence entièrement client-side.
+
 ### Inférence CLI
 
 ```bash
 cd model
 python predict.py --input sample_input.json
 ```
-
-Le modèle est également exporté en ONNX et embarqué dans l'application web pour une **inférence entièrement client-side**.
 
 ---
 
@@ -146,15 +156,15 @@ npm run tauri build
 |-------|---------|
 | Python (Conda) | 3.14+ |
 | Node.js | 22+ |
-| npm | 10+ |
-| Rust + Cargo | 1.95+ (pour le build desktop uniquement) |
-| MSVC Build Tools | 2022 (Windows, pour le build desktop uniquement) |
+| Rust + Cargo | 1.95+ *(build desktop uniquement)* |
+| MSVC Build Tools 2022 | *(Windows, build desktop uniquement)* |
 
 ---
 
 ## Liens
 
 - Tableau Trello : https://trello.com/b/2zdqb5xs/le-panier-sur
+- Release GitHub : https://github.com/BenjaminGott/Le-Panier-Sur/releases
 
 ---
 

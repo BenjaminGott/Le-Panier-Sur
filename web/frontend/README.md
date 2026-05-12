@@ -2,8 +2,7 @@
 
 > SvelteKit + Tauri · Galerie & identification de champignons
 
-<!-- CAPTURE : screenshot de l'application desktop -->
-> _Capture d'écran à ajouter — fenêtre desktop_
+![Page d'accueil](../../docs/assets/home_page.png)
 
 ---
 
@@ -53,33 +52,37 @@ npm install
 
 ## Pages
 
-| Route | Description |
-|-------|-------------|
-| `/` | Galerie des champignons avec recherche et filtres |
-| `/champignon/[slug]` | Fiche détaillée d'une espèce |
-| `/predict` | Identification par caractéristiques (modèle XGBoost / ONNX) |
-| `/stats` | Statistiques & visualisations (habitats, saisons, dangerosité) |
-| `/astuces` | Guide de cueillette avec quiz interactif |
+### Galerie (`/`)
 
-### Galerie
+Parcourir 217 espèces avec recherche plein texte et filtres par statut, saison, habitat et couleur du chapeau.
 
-<!-- CAPTURE : page d'accueil — galerie avec filtres -->
-> _Capture à ajouter_
+![Galerie](../../docs/assets/home_page.png)
 
-### Fiche espèce
+### Fiche espèce (`/champignon/[slug]`)
 
-<!-- CAPTURE : page /champignon/[slug] -->
-> _Capture à ajouter_
+Informations détaillées : comestibilité, tailles, morphologie (chapeau, pores, lames, pied, chair), habitats et saisons.
 
-### Prédiction
+![Fiche espèce](../../docs/assets/details_1.png)
 
-<!-- CAPTURE : page /predict avec résultats -->
-> _Capture à ajouter_
+![Fiche espèce — suite](../../docs/assets/details_2.png)
 
-### Statistiques
+### Identification (`/predict`)
 
-<!-- CAPTURE : page /stats -->
-> _Capture à ajouter_
+Décrire les caractéristiques observées — le modèle XGBoost propose les 5 espèces les plus probables, avec score de confiance et statut de comestibilité.
+
+![Page Identifier](../../docs/assets/model.png)
+
+### Statistiques (`/stats`)
+
+Vue d'ensemble du dataset : répartition par statut, espèces actives par mois, top 10 des habitats.
+
+![Statistiques](../../docs/assets/stats.png)
+
+### Guide du cueilleur (`/astuces`)
+
+7 étapes basées sur l'analyse statistique des 217 espèces — chaque étape explique un critère de sécurité avec ses données chiffrées.
+
+![Guide](../../docs/assets/guide.png)
 
 ---
 
@@ -93,13 +96,13 @@ Artefacts générés dans `src-tauri/target/release/` :
 
 | Fichier | Description |
 |---------|-------------|
-| `le-panier-sur.exe` | Exécutable brut |
+| `le-panier-sur.exe` | Exécutable direct — double-clic, pas d'installation requise |
 | `bundle/msi/Le Panier-Sûr_0.1.0_x64_en-US.msi` | Installeur MSI |
 | `bundle/nsis/Le Panier-Sûr_0.1.0_x64-setup.exe` | Installeur NSIS |
 
 ### Mettre à jour l'icône
 
-1. Modifier `src-tauri/icons/source.png` (PNG 1024×1024)
+1. Remplacer `src-tauri/icons/source.png` (PNG 1024×1024)
 2. Régénérer toutes les tailles :
    ```powershell
    npx @tauri-apps/cli icon src-tauri\icons\source.png
@@ -124,7 +127,7 @@ web/frontend/
 │   └── routes/                 # Pages SvelteKit
 │       ├── +page.svelte        # Galerie (/)
 │       ├── champignon/[slug]/  # Fiche espèce
-│       ├── predict/            # Prédiction ML
+│       ├── predict/            # Identification ML
 │       ├── stats/              # Statistiques
 │       └── astuces/            # Guide & quiz
 ├── static/
@@ -134,23 +137,9 @@ web/frontend/
 ├── src-tauri/                  # Configuration Tauri (Rust)
 │   ├── tauri.conf.json
 │   ├── icons/                  # Icônes de l'application
-│   └── src/                    # Code Rust (minimal)
+│   └── src/                    # Code Rust
 ├── package.json
 ├── svelte.config.js
 ├── vite.config.ts
 └── tailwind.config.js
 ```
-
----
-
-## Données
-
-Les fichiers de données ne sont pas versionnés (voir `.gitignore`). Pour les régénérer :
-
-```powershell
-# Depuis la racine du projet
-conda activate le_panier_sur
-jupyter notebook  # Lancer etl/scraping → transform → augment
-```
-
-Puis copier les fichiers générés dans `static/data/` et `static/models/`.
