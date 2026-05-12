@@ -1,0 +1,26 @@
+node_modules
+.svelte-kit
+build
+.vite
+dist
+
+# Tauri
+src-tauri/target
+src-tauri/Cargo.lock
+src-tauri/gen
+
+# Generated assets (re-run scripts to regenerate)
+static/img/*.jpg
+static/img/*.png
+static/img/*.webp
+static/data/champignons_clean.csv
+static/data/champignons_meta.json
+static/models/*.onnx
+static/models/xgb_features.json
+static/models/xgb_labels.json
+
+# OS / IDE
+.DS_Store
+.idea
+.vscode
+*.log
