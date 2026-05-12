@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: web/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: web/frontend
+          tagName: ${{ github.ref_name }}
+          releaseName: Le Panier-Sûr ${{ github.ref_name }}
+          releaseBody: |
+            ## 🍄 Le Panier-Sûr ${{ github.ref_name }}
+
+            Application desktop de galerie et d'identification de champignons.
+
+            ### Téléchargement
+
+            | Fichier | Description |
+            |---------|-------------|
+            | `Le Panier-Sûr_x64-setup.exe` | Installeur Windows (recommandé) |
+            | `Le Panier-Sûr_x64_en-US.msi` | Installeur MSI |
+            | `le-panier-sur.exe` | Exécutable direct |
+
+            ### Configuration requise
+            - Windows 10 / 11 (x64)
+            - Microsoft WebView2 *(déjà présent sur Windows 11)*
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: false
