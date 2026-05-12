@@ -9,10 +9,10 @@ src-tauri/target
 src-tauri/Cargo.lock
 src-tauri/gen
 
-# Images (volumineuses, régénérées par scripts/extract_images.py)
-static/img/*.jpg
-static/img/*.png
-static/img/*.webp
+# Images régénérées par scripts/extract_images.py (décommente pour exclure)
+# static/img/*.jpg
+# static/img/*.png
+# static/img/*.webp
 
 # OS / IDE
 .DS_Store
