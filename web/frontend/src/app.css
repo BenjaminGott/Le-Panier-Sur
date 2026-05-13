@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		font-family: theme('fontFamily.sans');
+		scroll-behavior: smooth;
+	}
+
+	body {
+		min-height: 100vh;
+		background:
+			radial-gradient(1200px 600px at 80% -10%, rgba(155, 195, 161, 0.35), transparent 60%),
+			radial-gradient(800px 500px at 0% 100%, rgba(214, 181, 140, 0.25), transparent 60%),
+			theme('colors.forest.50');
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: theme('fontFamily.display');
+		letter-spacing: -0.01em;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200;
+	}
+	.btn-primary {
+		@apply btn bg-forest-600 text-white shadow-sm hover:bg-forest-700 active:scale-[0.98];
+	}
+	.btn-ghost {
+		@apply btn bg-white/60 text-forest-800 hover:bg-white;
+	}
+	.card {
+		@apply rounded-2xl bg-white/80 backdrop-blur-sm shadow-card transition-all duration-200;
+	}
+	.chip {
+		@apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium;
+	}
+	.section-title {
+		@apply text-xs font-semibold uppercase tracking-wider text-forest-600;
+	}
+}
+
+/* Scrollbar discret */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: theme('colors.forest.200');
+	border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: theme('colors.forest.300');
+}

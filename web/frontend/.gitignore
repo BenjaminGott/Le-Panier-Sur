@@ -1,0 +1,21 @@
+node_modules
+.svelte-kit
+build
+.vite
+dist
+
+# Tauri
+src-tauri/target
+src-tauri/Cargo.lock
+src-tauri/gen
+
+# Images régénérées par scripts/extract_images.py (décommente pour exclure)
+# static/img/*.jpg
+# static/img/*.png
+# static/img/*.webp
+
+# OS / IDE
+.DS_Store
+.idea
+.vscode
+*.log
