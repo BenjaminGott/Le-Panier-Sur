@@ -1,3 +1,8 @@
+sujet/
+
+.claude
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -15,6 +20,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!web/frontend/src/lib/
 lib64/
 parts/
 sdist/
