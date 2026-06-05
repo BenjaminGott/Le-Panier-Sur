@@ -15,9 +15,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-	<header
-		class="sticky top-0 z-30 border-b border-forest-100/80 bg-white/70 backdrop-blur-md"
-	>
+	<header class="sticky top-0 z-30 border-b border-forest-100/80 bg-white/70 backdrop-blur-md">
 		<div class="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
 			<a href="{base}/" class="flex shrink-0 items-center gap-2">
 				<span
@@ -34,8 +32,7 @@
 
 			<nav class="ml-2 hidden items-center gap-1 md:flex">
 				{#each links as l}
-					{@const active =
-						l.href === '/' ? currentPath === '/' : currentPath.startsWith(l.href)}
+					{@const active = l.href === '/' ? currentPath === '/' : currentPath.startsWith(l.href)}
 					<a
 						href="{base}{l.href}"
 						class="rounded-lg px-3 py-1.5 text-sm font-medium transition"
@@ -54,8 +51,7 @@
 
 		<nav class="flex items-center justify-around border-t border-forest-100 px-2 py-1.5 md:hidden">
 			{#each links as l}
-				{@const active =
-					l.href === '/' ? currentPath === '/' : currentPath.startsWith(l.href)}
+				{@const active = l.href === '/' ? currentPath === '/' : currentPath.startsWith(l.href)}
 				<a
 					href="{base}{l.href}"
 					class="rounded-lg px-3 py-1.5 text-xs font-medium transition"

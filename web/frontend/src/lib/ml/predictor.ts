@@ -72,15 +72,8 @@ export function buildFeatureVector(
 }
 
 // Appel de l'inférence
-export async function predict(
-	values: Record<string, number>,
-	topK = 5
-): Promise<Prediction[]> {
-	const [session, features, labels] = await Promise.all([
-		getSession(),
-		getFeatures(),
-		getLabels()
-	]);
+export async function predict(values: Record<string, number>, topK = 5): Promise<Prediction[]> {
+	const [session, features, labels] = await Promise.all([getSession(), getFeatures(), getLabels()]);
 
 	const vec = buildFeatureVector(values, features);
 	const tensor = new ort.Tensor('float32', vec, [1, features.length]);

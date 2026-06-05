@@ -28,7 +28,9 @@
 
 <a
 	href="{base}/champignon/{mushroom.slug}"
-	class="group flex items-center gap-3 rounded-lg border bg-white p-2 transition hover:-translate-y-0.5 hover:shadow-card focus:outline-none focus:ring-2 focus:ring-forest-400 {VARIANT_BORDER[variant] ?? VARIANT_BORDER.mediocre}"
+	class="group flex items-center gap-3 rounded-lg border bg-white p-2 transition hover:-translate-y-0.5 hover:shadow-card focus:outline-none focus:ring-2 focus:ring-forest-400 {VARIANT_BORDER[
+		variant
+	] ?? VARIANT_BORDER.mediocre}"
 >
 	<div class="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-forest-100">
 		{#if mushroom.image}
@@ -43,11 +45,16 @@
 		{/if}
 	</div>
 	<div class="min-w-0 flex-1">
-		<p class="truncate font-display text-xs font-semibold text-forest-900 group-hover:text-forest-700">
+		<p
+			class="truncate font-display text-xs font-semibold text-forest-900 group-hover:text-forest-700"
+		>
 			{mushroom.nom}
 		</p>
 		<p class="mt-0.5 flex items-center gap-1.5 text-[0.65rem] text-forest-600">
-			<span class="h-1.5 w-1.5 shrink-0 rounded-full {VARIANT_DOT[variant] ?? VARIANT_DOT.mediocre}" aria-hidden="true"></span>
+			<span
+				class="h-1.5 w-1.5 shrink-0 rounded-full {VARIANT_DOT[variant] ?? VARIANT_DOT.mediocre}"
+				aria-hidden="true"
+			></span>
 			<span class="truncate">{mushroom.statut}</span>
 		</p>
 	</div>

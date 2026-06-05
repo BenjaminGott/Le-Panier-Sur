@@ -7,12 +7,7 @@
 	import StatusBadge from '$lib/components/StatusBadge.svelte';
 	import SectionStatus from '$lib/components/SectionStatus.svelte';
 	import { checkAvailability, predict } from '$lib/ml/predictor';
-	import {
-		predictForm,
-		predictResults,
-		resetPredictForm,
-		type Porteur
-	} from '$lib/stores/predict';
+	import { predictForm, predictResults, resetPredictForm, type Porteur } from '$lib/stores/predict';
 
 	let mushrooms: Mushroom[] = [];
 	let availability: { available: boolean; reason?: string } = { available: false };
@@ -26,25 +21,66 @@
 
 	// Textures / morpho / attaches / consistance / odeur / saveur
 	const TEXTURES_CHAPEAU = [
-		'lisse', 'meches', 'floconneux', 'visqueux', 'velours', 'ecailleux', 'craquele', 'strie'
+		'lisse',
+		'meches',
+		'floconneux',
+		'visqueux',
+		'velours',
+		'ecailleux',
+		'craquele',
+		'strie'
 	];
 	const TEXTURES_PIED = [
-		'lisse', 'meches', 'floconneux', 'visqueux', 'velours', 'ecailleux', 'craquele', 'strie'
+		'lisse',
+		'meches',
+		'floconneux',
+		'visqueux',
+		'velours',
+		'ecailleux',
+		'craquele',
+		'strie'
 	];
 	const MORPHOS = [
-		'anneau', 'volve', 'bulbe', 'massue', 'creux', 'elance', 'cylindrique', 'reseau'
+		'anneau',
+		'volve',
+		'bulbe',
+		'massue',
+		'creux',
+		'elance',
+		'cylindrique',
+		'reseau'
 	];
-	const ATTACHES = [
-		'libres', 'adnees', 'decurrentes', 'echancrees', 'serrees', 'espacees'
-	];
+	const ATTACHES = ['libres', 'adnees', 'decurrentes', 'echancrees', 'serrees', 'espacees'];
 	const CONSISTANCES = [
-		'ferme', 'tendre', 'molle', 'cassante', 'elastique', 'epaisse', 'fibreuse', 'spongieuse'
+		'ferme',
+		'tendre',
+		'molle',
+		'cassante',
+		'elastique',
+		'epaisse',
+		'fibreuse',
+		'spongieuse'
 	];
 	const ODEURS = [
-		'anise', 'phenol', 'iode', 'radis', 'farine', 'amande', 'terre', 'fruitee', 'desagreable'
+		'anise',
+		'phenol',
+		'iode',
+		'radis',
+		'farine',
+		'amande',
+		'terre',
+		'fruitee',
+		'desagreable'
 	];
 	const SAVEURS = [
-		'douce', 'amere', 'acide', 'piquante', 'poivree', 'iodee', 'desagreable', 'sans_saveur'
+		'douce',
+		'amere',
+		'acide',
+		'piquante',
+		'poivree',
+		'iodee',
+		'desagreable',
+		'sans_saveur'
 	];
 
 	const MOIS_LABELS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -171,9 +207,9 @@
 			Identifier un champignon
 		</h1>
 		<p class="mt-2 max-w-2xl text-sm text-forest-700">
-			Décris ce que tu observes — <strong>laisse vide ce que tu ignores</strong>. Le modèle
-			XGBoost propose les espèces les plus probables. <em>Cet outil ne remplace pas l'avis d'un
-				mycologue.</em>
+			Décris ce que tu observes — <strong>laisse vide ce que tu ignores</strong>. Le modèle XGBoost
+			propose les espèces les plus probables.
+			<em>Cet outil ne remplace pas l'avis d'un mycologue.</em>
 		</p>
 		<div
 			class="mt-3 max-w-2xl rounded-xl border border-forest-200 bg-forest-50/70 p-3 text-xs text-forest-800"
@@ -186,9 +222,7 @@
 					<strong>absentes</strong>.
 				</li>
 				<li>
-					<span class="chip bg-forest-100 px-1.5 py-0 text-[0.65rem] text-forest-700"
-						>Inconnu</span
-					>
+					<span class="chip bg-forest-100 px-1.5 py-0 text-[0.65rem] text-forest-700">Inconnu</span>
 					section vide ⇒ ignorée par le modèle (mieux que de mentir avec des « non »).
 				</li>
 			</ul>
@@ -202,7 +236,8 @@
 			<div class="card mb-6 border border-ocher-300 bg-ocher-50 p-5 text-sm text-earth-900">
 				<p class="font-semibold">Le modèle ONNX n'est pas encore disponible.</p>
 				<p class="mt-1 text-earth-700">{availability.reason ?? ''}</p>
-				<pre class="mt-3 overflow-x-auto rounded-lg bg-earth-900/90 p-3 text-xs text-ocher-100">cd web/frontend
+				<pre
+					class="mt-3 overflow-x-auto rounded-lg bg-earth-900/90 p-3 text-xs text-ocher-100">cd web/frontend
 python scripts/export_onnx.py</pre>
 			</div>
 		{/if}
@@ -214,15 +249,27 @@ python scripts/export_onnx.py</pre>
 					<h2 class="mb-3 font-display text-lg font-semibold text-forest-900">Anatomie</h2>
 					<div class="grid gap-3 sm:grid-cols-2">
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_un_chapeau} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_un_chapeau}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A un chapeau
 						</label>
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_un_pied} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_un_pied}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A un pied
 						</label>
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_de_la_chair} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_de_la_chair}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A de la chair
 						</label>
 					</div>
@@ -699,8 +746,7 @@ python scripts/export_onnx.py</pre>
 							{/each}
 						</ol>
 						<p class="mt-3 text-[0.7rem] italic text-forest-500">
-							⚠ Outil indicatif — ne consomme jamais un champignon sans validation par un
-							mycologue.
+							⚠ Outil indicatif — ne consomme jamais un champignon sans validation par un mycologue.
 						</p>
 					</div>
 				{/if}
