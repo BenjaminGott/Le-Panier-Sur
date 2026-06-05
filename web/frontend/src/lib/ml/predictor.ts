@@ -48,6 +48,7 @@ export async function getLabels(): Promise<string[]> {
 	return labelsPromise;
 }
 
+// Chargement du modèle
 async function getSession(): Promise<ort.InferenceSession> {
 	if (!sessionPromise) {
 		sessionPromise = ort.InferenceSession.create(`${base}/models/xgb_champignons.onnx`, {
@@ -70,6 +71,7 @@ export function buildFeatureVector(
 	return arr;
 }
 
+// Appel de l'inférence
 export async function predict(
 	values: Record<string, number>,
 	topK = 5
@@ -86,7 +88,6 @@ export async function predict(
 	const inputName = session.inputNames[0];
 	const outputs = await session.run({ [inputName]: tensor });
 
-	// Find a probability output (Float32 with shape [1, n_classes])
 	let proba: number[] | null = null;
 	for (const name of session.outputNames) {
 		const t = outputs[name];
