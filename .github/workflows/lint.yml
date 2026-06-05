@@ -1,0 +1,39 @@
+name: Lint & Format
+
+on:
+  push:
+    branches: [main, model_v1]
+    paths:
+      - 'web/frontend/src/**'
+      - 'web/frontend/eslint.config.js'
+      - 'web/frontend/.prettierrc'
+      - 'web/frontend/package.json'
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: ESLint + Prettier
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: ESLint
+        run: npm run lint:report
+
+      - name: Prettier
+        run: npm run format:check

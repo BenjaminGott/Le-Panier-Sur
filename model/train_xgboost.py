@@ -32,6 +32,7 @@ REAL_CSV = DATA_DIR / "champignons_clean.csv"
 
 MODEL_DIR = PROJECT_ROOT / "model"
 MODEL_OUT = MODEL_DIR / "xgb_champignons.json"
+ONNX_OUT = MODEL_DIR / "xgb_champignons.onnx"
 LABELS_OUT = MODEL_DIR / "xgb_labels.json"
 FEATURES_OUT = MODEL_DIR / "xgb_features.json"
 
@@ -293,6 +294,9 @@ def main() -> None:
     print(f"  -> {MODEL_OUT}")
     print(f"  -> {LABELS_OUT}")
     print(f"  -> {FEATURES_OUT}")
+
+    model.save_model(str(ONNX_OUT))
+    print(f"  -> {ONNX_OUT}")
 
     # Démo rapide du top-x sur quelques échantillons réels
     if REAL_CSV.exists():
