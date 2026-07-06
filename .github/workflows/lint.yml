@@ -2,7 +2,7 @@ name: Lint & Format
 
 on:
   push:
-    branches: [main, model_v1]
+    branches: [main, dev]
     paths:
       - 'web/frontend/src/**'
       - 'web/frontend/eslint.config.js'

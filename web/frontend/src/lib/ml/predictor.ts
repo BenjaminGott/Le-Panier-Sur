@@ -1,6 +1,7 @@
 import * as ort from 'onnxruntime-web';
 import { base } from '$app/paths';
 
+// Singletons — le modèle et les métadonnées ne sont chargés qu'une seule fois
 let sessionPromise: Promise<ort.InferenceSession> | null = null;
 let featuresPromise: Promise<string[]> | null = null;
 let labelsPromise: Promise<string[]> | null = null;
@@ -18,6 +19,7 @@ async function loadJson<T>(url: string): Promise<T> {
 	return r.json();
 }
 
+// Vérifie que le fichier .onnx est bien présent avant d'afficher l'UI de prédiction
 export async function checkAvailability(): Promise<PredictionAvailability> {
 	try {
 		const r = await fetch(`${base}/models/xgb_champignons.onnx`, { method: 'HEAD' });
@@ -34,6 +36,7 @@ export async function checkAvailability(): Promise<PredictionAvailability> {
 	}
 }
 
+// Liste des 163 features attendues par le modèle (ordre strict)
 export async function getFeatures(): Promise<string[]> {
 	if (!featuresPromise) {
 		featuresPromise = loadJson<string[]>(`${base}/models/xgb_features.json`);
@@ -41,6 +44,7 @@ export async function getFeatures(): Promise<string[]> {
 	return featuresPromise;
 }
 
+// Noms des 219 espèces de champignons (index = classe XGBoost)
 export async function getLabels(): Promise<string[]> {
 	if (!labelsPromise) {
 		labelsPromise = loadJson<string[]>(`${base}/models/xgb_labels.json`);
@@ -48,7 +52,7 @@ export async function getLabels(): Promise<string[]> {
 	return labelsPromise;
 }
 
-// Chargement du modèle
+// Charge le modèle ONNX dans le navigateur via WebAssembly (pas de serveur requis)
 async function getSession(): Promise<ort.InferenceSession> {
 	if (!sessionPromise) {
 		sessionPromise = ort.InferenceSession.create(`${base}/models/xgb_champignons.onnx`, {
@@ -58,7 +62,10 @@ async function getSession(): Promise<ort.InferenceSession> {
 	return sessionPromise;
 }
 
-/** Build the feature vector aligned with xgb_features.json. Missing -> NaN. */
+/**
+ * Aligne les valeurs du formulaire sur l'ordre exact des features du modèle.
+ * Les features non renseignées → NaN (XGBoost les gère nativement).
+ */
 export function buildFeatureVector(
 	values: Record<string, number>,
 	features: string[]
@@ -66,28 +73,31 @@ export function buildFeatureVector(
 	const arr = new Float32Array(features.length);
 	for (let i = 0; i < features.length; i++) {
 		const v = values[features[i]];
-		arr[i] = v == null ? NaN : v;
+		arr[i] = v == null ? NaN : v; // champ absent = donnée manquante
 	}
 	return arr;
 }
 
-// Appel de l'inférence
-export async function predict(
-	values: Record<string, number>,
-	topK = 5
-): Promise<Prediction[]> {
+/**
+ * Lance l'inférence ONNX et retourne les top-K espèces
+ * les plus probables avec leur score de confiance.
+ */
+export async function predict(values: Record<string, number>, topK = 5): Promise<Prediction[]> {
+	// Chargement parallèle du modèle et des métadonnées
 	const [session, features, labels] = await Promise.all([
 		getSession(),
 		getFeatures(),
 		getLabels()
 	]);
 
+	// Construction du tenseur d'entrée [1 × nb_features]
 	const vec = buildFeatureVector(values, features);
 	const tensor = new ort.Tensor('float32', vec, [1, features.length]);
 
 	const inputName = session.inputNames[0];
 	const outputs = await session.run({ [inputName]: tensor });
 
+	// Récupération de la sortie de probabilités [1 × 219]
 	let proba: number[] | null = null;
 	for (const name of session.outputNames) {
 		const t = outputs[name];
@@ -98,8 +108,8 @@ export async function predict(
 			break;
 		}
 	}
+	// Fallback si le nom du tenseur de sortie est inattendu
 	if (!proba) {
-		// Fallback: pick the largest float output
 		for (const name of session.outputNames) {
 			const t = outputs[name];
 			if (t && t.type === 'float32') {
@@ -110,11 +120,11 @@ export async function predict(
 	}
 	if (!proba) throw new Error('No usable output tensor from ONNX model');
 
+	// Tri décroissant par probabilité → top-K résultats
 	const idx = proba.map((_, i) => i);
 	idx.sort((a, b) => proba![b] - proba![a]);
-	const top = idx.slice(0, topK).map((i) => ({
+	return idx.slice(0, topK).map((i) => ({
 		espece: labels[i] ?? `class_${i}`,
 		confiance: proba![i]
 	}));
-	return top;
 }

@@ -7,16 +7,28 @@
 	import StatusBadge from '$lib/components/StatusBadge.svelte';
 	import SectionStatus from '$lib/components/SectionStatus.svelte';
 	import { checkAvailability, predict } from '$lib/ml/predictor';
-	import {
-		predictForm,
-		predictResults,
-		resetPredictForm,
-		type Porteur
-	} from '$lib/stores/predict';
+	import { predictTree, checkTreeAvailability, type TreeModelKey } from '$lib/ml/treeModels';
+	import { predictForm, predictResults, resetPredictForm, type Porteur } from '$lib/stores/predict';
+
+	type ModelKey = 'xgboost' | TreeModelKey;
+	const MODELS: { v: ModelKey; l: string; d: string }[] = [
+		{ v: 'forest', l: 'Forêt aléatoire', d: 'Robuste — recommandé sur vraies observations' },
+		{ v: 'tree', l: 'Arbre de décision', d: 'Interprétable, gère les champs inconnus' },
+		{ v: 'xgboost', l: 'XGBoost (ancien)', d: 'Précis mais fragile aux erreurs d’observation' }
+	];
+	let selectedModel: ModelKey = 'forest';
+	let abstain = false;
 
 	let mushrooms: Mushroom[] = [];
 	let availability: { available: boolean; reason?: string } = { available: false };
+	let treeAvail: Record<TreeModelKey, { available: boolean; reason?: string }> = {
+		tree: { available: false },
+		forest: { available: false }
+	};
 	let loading = true;
+
+	$: currentAvail =
+		selectedModel === 'xgboost' ? availability : treeAvail[selectedModel];
 
 	const PORTEUR_OPTIONS: { v: Porteur; l: string }[] = [
 		{ v: 'lames', l: 'Lames' },
@@ -26,25 +38,66 @@
 
 	// Textures / morpho / attaches / consistance / odeur / saveur
 	const TEXTURES_CHAPEAU = [
-		'lisse', 'meches', 'floconneux', 'visqueux', 'velours', 'ecailleux', 'craquele', 'strie'
+		'lisse',
+		'meches',
+		'floconneux',
+		'visqueux',
+		'velours',
+		'ecailleux',
+		'craquele',
+		'strie'
 	];
 	const TEXTURES_PIED = [
-		'lisse', 'meches', 'floconneux', 'visqueux', 'velours', 'ecailleux', 'craquele', 'strie'
+		'lisse',
+		'meches',
+		'floconneux',
+		'visqueux',
+		'velours',
+		'ecailleux',
+		'craquele',
+		'strie'
 	];
 	const MORPHOS = [
-		'anneau', 'volve', 'bulbe', 'massue', 'creux', 'elance', 'cylindrique', 'reseau'
+		'anneau',
+		'volve',
+		'bulbe',
+		'massue',
+		'creux',
+		'elance',
+		'cylindrique',
+		'reseau'
 	];
-	const ATTACHES = [
-		'libres', 'adnees', 'decurrentes', 'echancrees', 'serrees', 'espacees'
-	];
+	const ATTACHES = ['libres', 'adnees', 'decurrentes', 'echancrees', 'serrees', 'espacees'];
 	const CONSISTANCES = [
-		'ferme', 'tendre', 'molle', 'cassante', 'elastique', 'epaisse', 'fibreuse', 'spongieuse'
+		'ferme',
+		'tendre',
+		'molle',
+		'cassante',
+		'elastique',
+		'epaisse',
+		'fibreuse',
+		'spongieuse'
 	];
 	const ODEURS = [
-		'anise', 'phenol', 'iode', 'radis', 'farine', 'amande', 'terre', 'fruitee', 'desagreable'
+		'anise',
+		'phenol',
+		'iode',
+		'radis',
+		'farine',
+		'amande',
+		'terre',
+		'fruitee',
+		'desagreable'
 	];
 	const SAVEURS = [
-		'douce', 'amere', 'acide', 'piquante', 'poivree', 'iodee', 'desagreable', 'sans_saveur'
+		'douce',
+		'amere',
+		'acide',
+		'piquante',
+		'poivree',
+		'iodee',
+		'desagreable',
+		'sans_saveur'
 	];
 
 	const MOIS_LABELS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -53,7 +106,15 @@
 	let predError = '';
 
 	onMount(async () => {
-		[mushrooms, availability] = await Promise.all([loadMushrooms(), checkAvailability()]);
+		const [m, a, t, f] = await Promise.all([
+			loadMushrooms(),
+			checkAvailability(),
+			checkTreeAvailability('tree'),
+			checkTreeAvailability('forest')
+		]);
+		mushrooms = m;
+		availability = a;
+		treeAvail = { tree: t, forest: f };
 		loading = false;
 	});
 
@@ -144,10 +205,17 @@
 	async function runPredict() {
 		predError = '';
 		predictResults.set(null);
+		abstain = false;
 		busy = true;
 		try {
-			const result = await predict(buildValues(), 5);
-			predictResults.set(result);
+			const values = buildValues();
+			if (selectedModel === 'xgboost') {
+				predictResults.set(await predict(values, 5));
+			} else {
+				const res = await predictTree(selectedModel, values, 5);
+				abstain = res.abstain;
+				predictResults.set(res.predictions);
+			}
 		} catch (e) {
 			predError = String(e);
 		} finally {
@@ -172,9 +240,33 @@
 		</h1>
 		<p class="mt-2 max-w-2xl text-sm text-forest-700">
 			Décris ce que tu observes — <strong>laisse vide ce que tu ignores</strong>. Le modèle
-			XGBoost propose les espèces les plus probables. <em>Cet outil ne remplace pas l'avis d'un
-				mycologue.</em>
+			propose les espèces les plus probables.
+			<em>Cet outil ne remplace pas l'avis d'un mycologue.</em>
 		</p>
+		<div class="mt-3 max-w-2xl">
+			<p class="section-title mb-1.5">Modèle d'identification</p>
+			<div class="flex flex-wrap gap-1.5">
+				{#each MODELS as opt (opt.v)}
+					{@const sel = selectedModel === opt.v}
+					<button
+						type="button"
+						title={opt.d}
+						on:click={() => (selectedModel = opt.v)}
+						class="chip border text-xs transition"
+						class:bg-forest-600={sel}
+						class:text-white={sel}
+						class:bg-white={!sel}
+						class:border-forest-200={!sel}
+						class:text-forest-700={!sel}
+					>
+						{opt.l}
+					</button>
+				{/each}
+			</div>
+			<p class="mt-1 text-xs text-forest-500">
+				{MODELS.find((m) => m.v === selectedModel)?.d}
+			</p>
+		</div>
 		<div
 			class="mt-3 max-w-2xl rounded-xl border border-forest-200 bg-forest-50/70 p-3 text-xs text-forest-800"
 		>
@@ -186,9 +278,7 @@
 					<strong>absentes</strong>.
 				</li>
 				<li>
-					<span class="chip bg-forest-100 px-1.5 py-0 text-[0.65rem] text-forest-700"
-						>Inconnu</span
-					>
+					<span class="chip bg-forest-100 px-1.5 py-0 text-[0.65rem] text-forest-700">Inconnu</span>
 					section vide ⇒ ignorée par le modèle (mieux que de mentir avec des « non »).
 				</li>
 			</ul>
@@ -198,12 +288,10 @@
 	{#if loading}
 		<p class="text-forest-600">Chargement…</p>
 	{:else}
-		{#if !availability.available}
+		{#if !currentAvail.available}
 			<div class="card mb-6 border border-ocher-300 bg-ocher-50 p-5 text-sm text-earth-900">
-				<p class="font-semibold">Le modèle ONNX n'est pas encore disponible.</p>
-				<p class="mt-1 text-earth-700">{availability.reason ?? ''}</p>
-				<pre class="mt-3 overflow-x-auto rounded-lg bg-earth-900/90 p-3 text-xs text-ocher-100">cd web/frontend
-python scripts/export_onnx.py</pre>
+				<p class="font-semibold">Ce modèle n'est pas encore disponible.</p>
+				<p class="mt-1 text-earth-700">{currentAvail.reason ?? ''}</p>
 			</div>
 		{/if}
 
@@ -214,15 +302,27 @@ python scripts/export_onnx.py</pre>
 					<h2 class="mb-3 font-display text-lg font-semibold text-forest-900">Anatomie</h2>
 					<div class="grid gap-3 sm:grid-cols-2">
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_un_chapeau} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_un_chapeau}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A un chapeau
 						</label>
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_un_pied} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_un_pied}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A un pied
 						</label>
 						<label class="flex items-center gap-2 text-sm text-forest-800">
-							<input type="checkbox" bind:checked={$predictForm.a_de_la_chair} class="h-4 w-4 accent-forest-600" />
+							<input
+								type="checkbox"
+								bind:checked={$predictForm.a_de_la_chair}
+								class="h-4 w-4 accent-forest-600"
+							/>
 							A de la chair
 						</label>
 					</div>
@@ -646,7 +746,7 @@ python scripts/export_onnx.py</pre>
 			<aside class="space-y-3 lg:sticky lg:top-24 lg:self-start">
 				<button
 					class="btn-primary w-full py-3 text-base disabled:cursor-not-allowed disabled:opacity-60"
-					disabled={busy || !availability.available}
+					disabled={busy || !currentAvail.available}
 					on:click={runPredict}
 				>
 					{#if busy}Analyse…{:else}Identifier 🔍{/if}
@@ -659,10 +759,21 @@ python scripts/export_onnx.py</pre>
 					</div>
 				{/if}
 
+				{#if abstain}
+					<div class="card border border-ocher-300 bg-ocher-50 p-4 text-sm text-earth-900">
+						<p class="font-semibold">🤔 Espèce inconnue</p>
+						<p class="mt-1 text-earth-700">
+							Le modèle n'est pas assez confiant pour trancher — tes observations ne
+							correspondent nettement à aucune espèce connue. Ajoute des caractères ou fais
+							valider par un mycologue. Pistes faibles ci-dessous.
+						</p>
+					</div>
+				{/if}
+
 				{#if $predictResults}
 					<div class="card p-5">
 						<h2 class="mb-3 font-display text-lg font-semibold text-forest-900">
-							Top 5 espèces probables
+							{abstain ? 'Pistes faibles' : 'Top 5 espèces probables'}
 						</h2>
 						<ol class="space-y-3">
 							{#each $predictResults as p, i}
@@ -699,8 +810,7 @@ python scripts/export_onnx.py</pre>
 							{/each}
 						</ol>
 						<p class="mt-3 text-[0.7rem] italic text-forest-500">
-							⚠ Outil indicatif — ne consomme jamais un champignon sans validation par un
-							mycologue.
+							⚠ Outil indicatif — ne consomme jamais un champignon sans validation par un mycologue.
 						</p>
 					</div>
 				{/if}

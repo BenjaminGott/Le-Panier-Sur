@@ -110,21 +110,23 @@
 					</div>
 				{/each}
 				<p class="text-[0.65rem] italic leading-snug text-forest-500">
-					Lecture : un « ×risque » de 2.0 signifie que le risque est doublé par rapport à la
-					moyenne du dataset.
+					Lecture : un « ×risque » de 2.0 signifie que le risque est doublé par rapport à la moyenne
+					du dataset.
 				</p>
 			</aside>
 		{:else}
 			<aside class="flex flex-col gap-2">
 				<h3 class="section-title">Lecture du graphique</h3>
-				<div class="rounded-lg border border-forest-100 bg-forest-50/50 p-3 text-xs leading-snug text-forest-700">
+				<div
+					class="rounded-lg border border-forest-100 bg-forest-50/50 p-3 text-xs leading-snug text-forest-700"
+				>
 					<p>
-						Chaque barre représente un habitat avec son nombre d'espèces (<code>n=</code>) et
-						la part d'espèces dangereuses (toxiques, à rejeter ou mortelles).
+						Chaque barre représente un habitat avec son nombre d'espèces (<code>n=</code>) et la
+						part d'espèces dangereuses (toxiques, à rejeter ou mortelles).
 					</p>
 					<p class="mt-2">
-						Plus la barre est <strong class="text-status-toxique">rouge et longue</strong>,
-						plus l'habitat concentre d'espèces dangereuses.
+						Plus la barre est <strong class="text-status-toxique">rouge et longue</strong>, plus
+						l'habitat concentre d'espèces dangereuses.
 					</p>
 				</div>
 			</aside>
@@ -144,7 +146,9 @@
 
 	<div class="grid gap-4 border-t border-forest-100 p-5 sm:grid-cols-2">
 		<div class="rounded-xl border border-status-excellent/30 bg-status-excellent/5 p-4">
-			<h3 class="mb-2 flex items-center gap-1.5 font-display text-sm font-bold text-status-excellent">
+			<h3
+				class="mb-2 flex items-center gap-1.5 font-display text-sm font-bold text-status-excellent"
+			>
 				<span aria-hidden="true">✓</span> À faire
 			</h3>
 			<ul class="flex flex-col gap-1.5 text-sm leading-snug text-forest-800">
@@ -172,7 +176,9 @@
 		</div>
 	</div>
 
-	<footer class="border-t border-forest-100 bg-forest-50/40 p-5 text-sm leading-relaxed text-forest-800">
+	<footer
+		class="border-t border-forest-100 bg-forest-50/40 p-5 text-sm leading-relaxed text-forest-800"
+	>
 		<p>
 			<span class="font-display font-semibold text-forest-900">À retenir —</span>
 			{step.conclusion}

@@ -19,7 +19,7 @@
 		},
 		{
 			nom: 'CÈPE DE BORDEAUX',
-			hint: "Indice : un classique des bois mixtes, avec des pores."
+			hint: 'Indice : un classique des bois mixtes, avec des pores.'
 		},
 		{
 			nom: 'BOLET SATAN',
@@ -106,7 +106,11 @@
 
 		return [
 			{ icon: '🌳', label: 'Habitat', value: habitats.length ? habitats.join(', ') : '—' },
-			{ icon: '🎨', label: 'Couleurs du chapeau', value: chapeauCol.length ? chapeauCol.join(', ') : '—' },
+			{
+				icon: '🎨',
+				label: 'Couleurs du chapeau',
+				value: chapeauCol.length ? chapeauCol.join(', ') : '—'
+			},
 			{ icon: '📏', label: 'Taille du chapeau', value: tailleC },
 			{ icon: '🦠', label: 'Sous le chapeau', value: sousChapeau },
 			{ icon: '🦴', label: 'Particularités du pied', value: pied.length ? pied.join(', ') : '—' },
@@ -128,8 +132,8 @@
 					Mode quizz : cueillir ou laisser ?
 				</h2>
 				<p class="mt-1 max-w-2xl text-sm text-forest-700">
-					{items.length} cas concrets pour mettre en pratique le guide. Pour chaque champignon,
-					applique les 7 étapes et décide.
+					{items.length} cas concrets pour mettre en pratique le guide. Pour chaque champignon, applique
+					les 7 étapes et décide.
 				</p>
 			</div>
 		</div>
@@ -139,8 +143,8 @@
 		{#if !started}
 			<div class="flex flex-col items-center gap-3 py-6 text-center">
 				<p class="max-w-md text-sm text-forest-700">
-					Le nom de l'espèce est caché. À toi d'analyser les indices et de décider si tu mets
-					ce champignon dans ton panier ou si tu le laisses sur place.
+					Le nom de l'espèce est caché. À toi d'analyser les indices et de décider si tu mets ce
+					champignon dans ton panier ou si tu le laisses sur place.
 				</p>
 				<button
 					type="button"
@@ -174,8 +178,8 @@
 							Tu maîtrises les réflexes de base. Garde en tête qu'aucun guide ne remplace une
 							identification formelle par un mycologue.
 						{:else}
-							Chaque erreur est une occasion d'affiner. Reviens sur les étapes liées aux
-							critères que tu as mal interprétés.
+							Chaque erreur est une occasion d'affiner. Reviens sur les étapes liées aux critères
+							que tu as mal interprétés.
 						{/if}
 					</p>
 				</div>
@@ -206,7 +210,9 @@
 							<div
 								class="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-forest-900/60 via-transparent to-transparent p-3"
 							>
-								<span class="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-forest-900">
+								<span
+									class="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-forest-900"
+								>
 									? mystère ?
 								</span>
 							</div>
@@ -222,10 +228,14 @@
 						<h3 class="section-title mb-2">Indices à observer</h3>
 						<dl class="grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
 							{#each listFeatures(current) as f}
-								<div class="flex items-start gap-2 rounded-md border border-forest-100 bg-forest-50/40 p-2">
+								<div
+									class="flex items-start gap-2 rounded-md border border-forest-100 bg-forest-50/40 p-2"
+								>
 									<span class="text-base" aria-hidden="true">{f.icon}</span>
 									<div class="min-w-0">
-										<dt class="text-[0.65rem] font-semibold uppercase tracking-wider text-forest-500">
+										<dt
+											class="text-[0.65rem] font-semibold uppercase tracking-wider text-forest-500"
+										>
 											{f.label}
 										</dt>
 										<dd class="text-xs text-forest-800">{f.value}</dd>
@@ -259,7 +269,11 @@
 								? 'border-status-excellent/40 bg-status-excellent/5'
 								: 'border-status-toxique/40 bg-status-toxique/5'}"
 						>
-							<p class="font-display text-sm font-bold {lastCorrect ? 'text-status-excellent' : 'text-status-toxique'}">
+							<p
+								class="font-display text-sm font-bold {lastCorrect
+									? 'text-status-excellent'
+									: 'text-status-toxique'}"
+							>
 								{lastCorrect ? '✓ Bonne réponse !' : '✗ Mauvaise réponse'}
 							</p>
 							<p class="mt-1.5 text-xs text-forest-800">
@@ -270,12 +284,13 @@
 							</div>
 							<p class="mt-2 text-xs leading-snug text-forest-700">
 								{#if dangerLevel(current.statut) === 'deadly'}
-									⚠ Espèce <strong>mortelle</strong> — la bonne décision était de la <strong>laisser</strong>.
+									⚠ Espèce <strong>mortelle</strong> — la bonne décision était de la
+									<strong>laisser</strong>.
 								{:else if dangerLevel(current.statut) === 'risky'}
 									Espèce toxique ou à rejeter — à <strong>laisser</strong> sur place.
 								{:else}
-									Espèce comestible (selon le guide) — pouvait être <strong>cueillie</strong> par
-									un cueilleur expérimenté.
+									Espèce comestible (selon le guide) — pouvait être <strong>cueillie</strong> par un cueilleur
+									expérimenté.
 								{/if}
 							</p>
 						</div>

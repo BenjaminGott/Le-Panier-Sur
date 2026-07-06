@@ -116,10 +116,7 @@
 					{/if}
 				</dl>
 
-				<a
-					href="{base}/predict?ref={mushroom.slug}"
-					class="btn-primary mt-auto w-fit text-sm"
-				>
+				<a href="{base}/predict?ref={mushroom.slug}" class="btn-primary mt-auto w-fit text-sm">
 					Identifier un champignon similaire →
 				</a>
 			</div>
@@ -186,11 +183,7 @@
 				]}
 			/>
 
-			<InfoSection
-				titre="Habitat"
-				icon="🌳"
-				subgroups={[{ label: 'Milieux', items: habitats }]}
-			/>
+			<InfoSection titre="Habitat" icon="🌳" subgroups={[{ label: 'Milieux', items: habitats }]} />
 
 			<SaisonStrip active={mois} />
 		</div>
