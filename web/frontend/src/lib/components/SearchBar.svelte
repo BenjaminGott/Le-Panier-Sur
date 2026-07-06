@@ -6,7 +6,7 @@
 	let debounceTimer: ReturnType<typeof setTimeout>;
 	let inputEl: HTMLInputElement;
 
-	$: $filters, syncFromStore();
+	$: ($filters, syncFromStore());
 	function syncFromStore() {
 		if ($filters.search !== value) value = $filters.search;
 	}
@@ -40,7 +40,11 @@
 		stroke-width="2"
 		aria-hidden="true"
 	>
-		<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" />
+		<path
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			d="M21 21l-4.35-4.35M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+		/>
 	</svg>
 	<input
 		bind:this={inputEl}

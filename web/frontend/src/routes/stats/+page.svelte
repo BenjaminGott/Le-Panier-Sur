@@ -71,9 +71,7 @@
 				<BarSaisons {mushrooms} />
 			</div>
 			<div class="card p-5 lg:col-span-2">
-				<h2 class="mb-4 font-display text-lg font-semibold text-forest-900">
-					Top 10 des habitats
-				</h2>
+				<h2 class="mb-4 font-display text-lg font-semibold text-forest-900">Top 10 des habitats</h2>
 				<BarHabitats {mushrooms} />
 			</div>
 		</div>

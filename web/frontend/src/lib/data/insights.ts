@@ -71,4 +71,3 @@ export function splitBy(mushrooms: Mushroom[], pred: FeaturePredicate) {
 		without: bucketize(wo, `Sans ${pred.label}`)
 	};
 }
-

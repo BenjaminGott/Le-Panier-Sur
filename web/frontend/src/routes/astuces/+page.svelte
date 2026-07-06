@@ -96,11 +96,12 @@
 		</h1>
 		<p class="mt-3 text-sm text-forest-700 sm:text-base">
 			Sept étapes pour devenir un meilleur cueilleur, basées sur l'analyse statistique de
-			<strong>{mushrooms.length || '…'}</strong> espèces du guide. Chaque étape t'apprend
-			un réflexe à acquérir et te montre, chiffres à l'appui, pourquoi ce critère oriente vers
-			la sécurité ou le danger.
+			<strong>{mushrooms.length || '…'}</strong> espèces du guide. Chaque étape t'apprend un réflexe à
+			acquérir et te montre, chiffres à l'appui, pourquoi ce critère oriente vers la sécurité ou le danger.
 		</p>
-		<div class="mt-4 inline-flex items-center gap-2 rounded-full bg-forest-100 px-3 py-1.5 text-xs font-medium text-forest-700">
+		<div
+			class="mt-4 inline-flex items-center gap-2 rounded-full bg-forest-100 px-3 py-1.5 text-xs font-medium text-forest-700"
+		>
 			<span aria-hidden="true">📊</span>
 			Toutes les statistiques sont calculées en direct sur le dataset
 		</div>
@@ -142,9 +143,11 @@
 						</li>
 					{/each}
 				</ol>
-				<div class="mt-4 rounded-lg border border-status-toxique/20 bg-status-toxique/5 p-3 text-[0.7rem] leading-snug text-earth-900">
-					⚠ Aucun de ces critères pris isolément ne suffit. Les statistiques aident à
-					orienter, jamais à conclure.
+				<div
+					class="mt-4 rounded-lg border border-status-toxique/20 bg-status-toxique/5 p-3 text-[0.7rem] leading-snug text-earth-900"
+				>
+					⚠ Aucun de ces critères pris isolément ne suffit. Les statistiques aident à orienter,
+					jamais à conclure.
 				</div>
 			</nav>
 
@@ -168,7 +171,10 @@
 				<div class="card border-2 border-dashed border-forest-200 bg-forest-50/30 p-6 text-center">
 					<p class="text-sm font-medium text-forest-800">
 						🍄 Tu as terminé le guide. Mets-le en pratique avec l'outil
-						<a href="/predict" class="font-semibold text-forest-700 underline hover:text-forest-900">
+						<a
+							href="/predict"
+							class="font-semibold text-forest-700 underline hover:text-forest-900"
+						>
 							Identifier
 						</a>
 						et garde toujours en tête : au moindre doute, on ne mange pas.

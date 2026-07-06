@@ -40,9 +40,7 @@
 						{#each sg.items as it}
 							{@const niceLabel = it.replace(/_/g, ' ')}
 							{#if sg.colorMode && isCouleur(it)}
-								<li
-									class="chip border border-forest-200 bg-white text-xs text-forest-800"
-								>
+								<li class="chip border border-forest-200 bg-white text-xs text-forest-800">
 									<span
 										class="inline-block h-3 w-3 rounded-full border border-forest-200"
 										style="background-color: {COULEUR_HEX[it]}"

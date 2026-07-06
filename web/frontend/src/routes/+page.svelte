@@ -94,13 +94,11 @@
 <section class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:py-10">
 	<div class="mb-6 flex flex-col gap-2 sm:mb-8">
 		<p class="section-title">Bienvenue dans</p>
-		<h1 class="font-display text-3xl font-bold text-forest-900 sm:text-4xl">
-			Le Panier-Sûr 🍄
-		</h1>
+		<h1 class="font-display text-3xl font-bold text-forest-900 sm:text-4xl">Le Panier-Sûr 🍄</h1>
 		<p class="max-w-2xl text-sm text-forest-700 sm:text-base">
 			Explore une collection de
-			<strong>{$mushrooms.length}</strong> champignons. Filtre par statut, saison, habitat ou
-			couleur de chapeau, et consulte la fiche détaillée pour identifier au mieux ta cueillette.
+			<strong>{$mushrooms.length}</strong> champignons. Filtre par statut, saison, habitat ou couleur
+			de chapeau, et consulte la fiche détaillée pour identifier au mieux ta cueillette.
 		</p>
 	</div>
 
@@ -135,11 +133,7 @@
 							viewBox="0 0 24 24"
 							aria-hidden="true"
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M3 6h18M6 12h12M10 18h4"
-							/>
+							<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M6 12h12M10 18h4" />
 						</svg>
 						Filtres
 						{#if count > 0}
@@ -176,8 +170,8 @@
 					{#if totalPages > 1}
 						<nav class="mt-10 flex flex-col items-center gap-3" aria-label="Pagination">
 							<p class="text-xs text-forest-600">
-								Page <strong>{currentPage}</strong> / {totalPages} —
-								affichage {startIdx + 1}–{Math.min(startIdx + PAGE_SIZE, $filtered.length)}
+								Page <strong>{currentPage}</strong> / {totalPages} — affichage {startIdx +
+									1}–{Math.min(startIdx + PAGE_SIZE, $filtered.length)}
 								sur {$filtered.length}
 							</p>
 							<div class="flex flex-wrap items-center justify-center gap-1.5">
